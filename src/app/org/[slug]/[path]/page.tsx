@@ -1,8 +1,10 @@
 import { OrganizationView } from "@daveyplate/better-auth-ui";
 import { organizationViewPaths } from "@daveyplate/better-auth-ui/server";
+
 export function generateStaticParams() {
   return Object.values(organizationViewPaths).map((path) => ({ path }));
 }
+
 export default async function OrganizationPage({
   params,
 }: {

@@ -30,3 +30,31 @@ import { headers } from "next/headers";
 const session = await auth.api.getSession({
 headers: await headers() // you need to pass the headers object.
 })
+
+# Organizations
+
+import { useContext } from 'react'
+import { AuthUIContext } from '@daveyplate/better-auth-ui'
+function MyComponent() {
+const { hooks } = useContext(AuthUIContext)
+
+// Get active organization
+const { data: activeOrg } = hooks.useActiveOrganization()
+
+// List all organizations
+const { data: organizations } = hooks.useListOrganizations()
+
+// Check permissions
+const { data: hasPermission } = hooks.useHasPermission({
+permissions: {
+organization: ["update"],
+member: ["create", "delete"]
+}
+})
+
+return (
+<div>
+Current org: {activeOrg?.name}
+</div>
+)
+}

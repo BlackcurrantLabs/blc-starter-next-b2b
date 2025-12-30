@@ -23,9 +23,10 @@ export function Providers({ children }: { children: ReactNode }) {
       basePath="/auth"
       organization={{
         pathMode: "slug",
-        basePath: "/organization",
+        basePath: "/org",
         slug,
       }}
+      magicLink={true}
     >
       {children}
     </AuthUIProvider>

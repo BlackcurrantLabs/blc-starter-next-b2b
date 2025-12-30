@@ -7,5 +7,7 @@ export default async function RedirectAfterLogin() {
     headers: await headers(),
   });
 
+  // add redirect logic here
+
   return redirect("/account/settings");
 }
