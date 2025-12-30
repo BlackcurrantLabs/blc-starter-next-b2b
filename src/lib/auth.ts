@@ -24,7 +24,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "sqlite", // or "mysql", "postgresql", ...etc
   }),
-  emailAndPassword: { 
+  emailAndPassword: {
     enabled: true,
     autoSignIn: true,
     requireEmailVerification: true,
@@ -33,12 +33,12 @@ export const auth = betterAuth({
     resetPasswordTokenExpiresIn: 60 * 15, // 15 minutes
     verificationTokenExpiresIn: 3600, // 1 hour
     revokeSessionsOnPasswordReset: true,
-    sendResetPassword: async ({user, url}) => {
+    sendResetPassword: async ({ user, url }) => {
       await sendResetPasswordEmail(user.email, user.name, url)
     }
-  }, 
+  },
   emailVerification: {
-    sendVerificationEmail: async ({user, url}) => {
+    sendVerificationEmail: async ({ user, url }) => {
       await sendVerificationEmail(user.email, user.name, url)
     },
     sendOnSignUp: true,
@@ -48,8 +48,8 @@ export const auth = betterAuth({
   plugins: [
     admin(),
     magicLink({
-      sendMagicLink: async ({email, token, url}) => {
-        await sendMagicLinkEmail(email,url)
+      sendMagicLink: async ({ email, token, url }) => {
+        await sendMagicLinkEmail(email, url)
       },
       rateLimit: {
         max: 5,
@@ -67,7 +67,7 @@ export const auth = betterAuth({
         },
       },
       organizationHooks: {
-        
+
       },
     }),
   ],
