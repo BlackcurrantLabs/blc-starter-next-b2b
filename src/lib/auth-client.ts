@@ -5,13 +5,17 @@
  * It handles authentication basics, token refresh and such
  */
 import { createAuthClient } from "better-auth/react";
-import { inferAdditionalFields, adminClient } from "better-auth/client/plugins";
+import { inferAdditionalFields, adminClient, organizationClient, inferOrgAdditionalFields, magicLinkClient } from "better-auth/client/plugins";
 import { auth } from "@/lib/auth";
 
 export const authClient = createAuthClient({
   //you can pass client configuration here
   plugins: [
     inferAdditionalFields<typeof auth>(),
+    magicLinkClient(),
     adminClient(),
+    organizationClient({
+      schema: inferOrgAdditionalFields<typeof auth>(),
+    }),
   ],
 });
