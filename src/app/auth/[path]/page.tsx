@@ -4,9 +4,6 @@
  */
 
 import { AuthView } from "@daveyplate/better-auth-ui";
-import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 
 export const dynamicParams = false;
 
@@ -32,12 +29,8 @@ export default async function AuthPage({
         </div>
       </div>
 
-      <div className=" lg:col-span-2 flex items-center justify-center md:rounded-l-4xl md:bg-[#fff] lg:p-6">
+      <div className="lg:col-span-2 flex items-center justify-center md:rounded-l-4xl md:bg-[#fff] lg:p-6">
         <div className="w-full max-w-md h-full flex flex-col rounded-3xl p-4 md:p-8 pt-16 ">
-          <h4 className="text-3xl text-slate-700  text-center">
-            Client Portal
-          </h4>
-
           <div className=" authCard flex-1 flex items-center justify-center">
             <AuthView
               path={path}
