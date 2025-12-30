@@ -15,7 +15,7 @@ export default async function AuthPage({
   const { path } = await params;
   return (
     <main
-      className="h-screen w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  bg-gradient-to-br from-[#FBD276] via-[#FD947F] to-[#FB7186]
+      className="h-screen w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  bg-gradient-to-br from-[#bef364] via-[#63a401] to-[#4c7b10]
           bg-no-repeat bg-center bg-contain overflow-y-hidden "
     >
       <div
@@ -24,9 +24,7 @@ export default async function AuthPage({
          
         "
       >
-        <div className="absolute right-[-5%] top-[80%] lg:right-[-35%] lg:top-[70%] -translate-y-1/2 md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[550px] xl:h-[550px] 2xl:w-[650px] 2xl:h-[650px]">
-          
-        </div>
+        <div className="absolute right-[-5%] top-[80%] lg:right-[-35%] lg:top-[70%] -translate-y-1/2 md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px] xl:w-[550px] xl:h-[550px] 2xl:w-[650px] 2xl:h-[650px]"></div>
       </div>
 
       <div className="lg:col-span-2 flex items-center justify-center md:rounded-l-4xl md:bg-[#fff] lg:p-6">
