@@ -1,5 +1,10 @@
 import { redirect, RedirectType } from "next/navigation";
 
-export default function OrgRootPage() {
-  redirect("/org/dashboard", RedirectType.replace);
+export default async function OrgRootPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  redirect(`/org/${slug}/dashboard`, RedirectType.replace);
 }

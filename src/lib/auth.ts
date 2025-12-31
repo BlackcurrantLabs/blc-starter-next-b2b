@@ -67,7 +67,14 @@ export const auth = betterAuth({
         },
       },
       organizationHooks: {
-
+        afterCreateInvitation: async ({
+          invitation, inviter, organization
+        }) => {
+          // sendCustomInvitationEmail(invitation, organization);
+        },
+        afterRejectInvitation: async ({ invitation, user, organization }) => {
+          // await notifyInviterOfRejection(invitation.inviterId, user.email);
+        },
       },
     }),
   ],
