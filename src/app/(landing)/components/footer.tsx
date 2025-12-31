@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { Logo } from "./logo";
+import { Logo } from "@/components/logo";
 
 const footerLinks = [
   {
@@ -17,7 +17,7 @@ const footerLinks = [
   },
 ];
 
-const Footer = () => {
+const LandingFooter = () => {
   return (
     <footer className="border-t">
       <div className="max-w-(--breakpoint-xl) mx-auto">
@@ -52,4 +52,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default LandingFooter;
