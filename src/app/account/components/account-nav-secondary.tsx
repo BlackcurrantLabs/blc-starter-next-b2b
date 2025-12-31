@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -11,7 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
-export function NavSecondary({
+export function AccountNavSecondary({
   items,
   ...props
 }: {

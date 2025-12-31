@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
 
 export default async function RedirectAfterLogin() {
   const session = await auth.api.getSession({
@@ -9,5 +9,5 @@ export default async function RedirectAfterLogin() {
 
   // add redirect logic here
 
-  return redirect("/account/settings");
+  return redirect("/account/dashboard", RedirectType.replace);
 }

@@ -6,8 +6,8 @@ import {
   Settings2Icon as IconSettings,
 } from "lucide-react";
 
-import { NavMain } from "@/app/account/components/nav-main";
-import { NavSecondary } from "@/app/account/components/nav-secondary";
+import { AdminNavMain } from "@/app/admin/components/admin-nav-main";
+import { AdminNavSecondary } from "@/app/admin/components/admin-nav-secondary";
 import {
   Sidebar,
   SidebarContent,
@@ -17,7 +17,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { OrganizationSwitcher, UserButton } from "@daveyplate/better-auth-ui";
+import { OrganizationSwitcher } from "@daveyplate/better-auth-ui";
 
 const data = {
   navMain: [
@@ -46,7 +46,9 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AdminSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -66,8 +68,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <AdminNavMain items={data.navMain} />
+        <AdminNavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <OrganizationSwitcher />

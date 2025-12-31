@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 
-export function NavMain({
+export function AccountNavMain({
   items,
 }: {
   items: {
