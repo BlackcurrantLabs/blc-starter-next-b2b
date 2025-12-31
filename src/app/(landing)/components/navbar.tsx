@@ -3,6 +3,7 @@ import { Logo } from "@/components/logo";
 import { LandingNavMenu } from "@/app/(landing)/components/nav-menu";
 import { LandingNavigationSheet } from "@/app/(landing)/components/navigation-sheet";
 import Link from "next/link";
+import LandingNavIsland from "@/app/(landing)/components/landing-nav-island";
 
 const LandingNavbar = () => {
   return (
@@ -14,14 +15,7 @@ const LandingNavbar = () => {
         <LandingNavMenu className="hidden md:block" />
 
         <div className="flex items-center gap-3">
-          <Link href="/auth/sign-in">
-            <Button variant="outline" className="hidden sm:inline-flex">
-              Sign In
-            </Button>
-          </Link>
-          <Link href="/auth/sign-up">
-            <Button>Get Started</Button>
-          </Link>
+          <LandingNavIsland />
 
           {/* Mobile Menu */}
           <div className="md:hidden">

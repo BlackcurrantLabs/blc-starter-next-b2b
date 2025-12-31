@@ -15,7 +15,7 @@ export default async function AccountPage({
   const { path } = await params;
   return (
     <main className="container p-4 md:p-6">
-      <AccountView path={path} />
+      <AccountView path={path} hideNav />
     </main>
   );
 }
