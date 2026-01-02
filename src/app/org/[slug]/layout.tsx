@@ -30,7 +30,7 @@ export default async function OrgLayout({
       }
     >
       <OrgSidebar variant="inset" />
-      <SidebarInset className="">
+      <SidebarInset className="m-0! p-0! rounded-none!">
         <OrgHeader />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">

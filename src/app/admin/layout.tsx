@@ -26,7 +26,7 @@ export default async function AdminLayout({
       }
     >
       <AdminSidebar variant="inset" />
-      <SidebarInset className="">
+      <SidebarInset className="m-0! p-0! rounded-none!">
         <AdminHeader />
         <div className="flex flex-1 flex-col">
           <div className="@container/main flex flex-1 flex-col gap-2">
