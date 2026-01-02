@@ -3,6 +3,7 @@ import { AdminHeader } from "@/app/admin/components/admin-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 
 export default async function AdminLayout({
@@ -16,8 +17,13 @@ export default async function AdminLayout({
   if (!session) redirect("/auth/sign-in", RedirectType.replace);
   if (session.user.role !== "admin") redirect("/", RedirectType.replace);
 
+  const cookieStore = await cookies();
+  const sidebarCookie = cookieStore.get("sidebar_state");
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : true;
+
   return (
     <SidebarProvider
+      defaultOpen={defaultOpen}
       style={
         {
           "--sidebar-width": "calc(var(--spacing) * 72)",

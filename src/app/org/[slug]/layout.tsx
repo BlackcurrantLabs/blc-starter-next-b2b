@@ -3,6 +3,7 @@ import { OrgHeader } from "@/app/org/[slug]/components/org-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 import { useCurrentOrganization } from "@daveyplate/better-auth-ui";
 
@@ -16,12 +17,13 @@ export default async function OrgLayout({
   });
   if (!session) redirect("/auth/sign-in", RedirectType.replace);
 
-  // const org = useCurrentOrganization({
-  //   slug:
-  // })
+  const cookieStore = await cookies();
+  const sidebarCookie = cookieStore.get("sidebar_state");
+  const defaultOpen = sidebarCookie ? sidebarCookie.value === "true" : true;
 
   return (
     <SidebarProvider
+      defaultOpen={defaultOpen}
       style={
         {
           "--sidebar-width": "calc(var(--spacing) * 72)",
