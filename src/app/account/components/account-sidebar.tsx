@@ -1,11 +1,7 @@
 "use client";
 
-import * as React from "react";
-import {
-  LayoutDashboardIcon as IconDashboard,
-  Settings2Icon as IconSettings,
-} from "lucide-react";
-
+import Link from "next/link";
+import { OrganizationSwitcher } from "@daveyplate/better-auth-ui";
 import { AccountNavMain } from "@/app/account/components/account-nav-main";
 import { AccountNavSecondary } from "@/app/account/components/account-nav-secondary";
 import {
@@ -17,38 +13,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { OrganizationSwitcher, UserButton } from "@daveyplate/better-auth-ui";
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/account/dashboard",
-      icon: IconDashboard,
-    },
-    {
-      title: "Organizations",
-      url: "/account/organizations",
-      icon: IconSettings,
-    },
-  ],
-  navSecondary: [
-    {
-      title: "User Settings",
-      url: "/account/settings",
-      icon: IconSettings,
-    },
-    {
-      title: "Security",
-      url: "/account/security",
-      icon: IconSettings,
-    },
-  ],
-};
+import { getAccountNavItems } from "@/app/nav-config";
 
 export function AccountSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const data = getAccountNavItems();
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -56,13 +26,13 @@ export function AccountSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <a href="/account/dashboard">
+              <Link href="/account/dashboard">
                 <span className="text-base font-semibold">
                   {process.env.NEXT_PUBLIC_SITE_NAME}
                 </span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

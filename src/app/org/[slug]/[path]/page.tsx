@@ -13,7 +13,7 @@ export default async function OrganizationPage({
   const { path } = await params;
   return (
     <main className="container p-4 md:p-6">
-      <OrganizationView path={path} />
+      <OrganizationView hideNav path={path} />
     </main>
   );
 }

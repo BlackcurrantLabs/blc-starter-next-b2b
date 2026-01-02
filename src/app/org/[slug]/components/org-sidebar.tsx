@@ -1,11 +1,8 @@
 "use client";
 
-import * as React from "react";
-import {
-  LayoutDashboardIcon as IconDashboard,
-  Settings2Icon as IconSettings,
-} from "lucide-react";
-
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useCurrentOrganization } from "@daveyplate/better-auth-ui";
 import { OrgNavMain } from "@/app/org/[slug]/components/org-nav-main";
 import { OrgNavSecondary } from "@/app/org/[slug]/components/org-nav-secondary";
 import {
@@ -17,32 +14,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { OrganizationSwitcher } from "@daveyplate/better-auth-ui";
-import { useParams } from "next/navigation";
+import { getOrgNavItems } from "@/app/nav-config";
 
 export function OrgSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { slug } = useParams();
-  const data = {
-    navMain: [
-      {
-        title: "Dashboard",
-        url: `/org/${slug}/dashboard`,
-        icon: IconDashboard,
-      },
-    ],
-    navSecondary: [
-      {
-        title: "Organization Settings",
-        url: `/org/${slug}/settings`,
-        icon: IconSettings,
-      },
-      {
-        title: "Organization Members",
-        url: `/org/${slug}/members`,
-        icon: IconSettings,
-      },
-    ],
-  };
+  const data = getOrgNavItems(slug as string);
+  const org = useCurrentOrganization();
 
   return (
     <Sidebar collapsible="offcanvas" {...props}>
@@ -51,13 +28,13 @@ export function OrgSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:p-1.5!"
             >
-              <a href="/account/dashboard">
+              <Link href={`/org/${slug}/dashboard`}>
                 <span className="text-base font-semibold">
-                  {process.env.NEXT_PUBLIC_SITE_NAME}
+                  {org.data?.name}
                 </span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -66,9 +43,7 @@ export function OrgSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <OrgNavMain items={data.navMain} />
         <OrgNavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter>
-        <OrganizationSwitcher />
-      </SidebarFooter>
+      <SidebarFooter></SidebarFooter>
     </Sidebar>
   );
 }
