@@ -6,7 +6,7 @@ import { prisma } from "@/app/database";
 import { admin, magicLink, organization } from "better-auth/plugins";
 import { sendVerificationEmail, sendResetPasswordEmail, sendMagicLinkEmail } from "./emails";
 export const auth = betterAuth({
-  appName: "Multitude",
+  appName: process.env.NEXT_PUBLIC_SITE_NAME,
   trustedOrigins: [
     "http://localhost:3000",
     // Add more domains here

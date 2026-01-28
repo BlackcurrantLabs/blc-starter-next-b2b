@@ -34,7 +34,7 @@ export const MagicLinkEmail = ({
               src={`${baseUrl}/logo.png`}
               width="40"
               height="33"
-              alt="Multitude"
+              alt="Logo"
             />
             <Section>
               <Text className="text-base font-dropbox font-light text-[#404040] leading-[26px]">

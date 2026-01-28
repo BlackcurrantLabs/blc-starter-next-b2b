@@ -24,19 +24,6 @@ avoid editing components in components/ directory, instead style them with local
 - [Changelog](https://ui.shadcn.com/docs/changelog): Release notes and version history.
 - [About](https://ui.shadcn.com/docs/about): Credits and project information.
 
-## Installation
-
-- [Next.js](https://ui.shadcn.com/docs/installation/next): Install shadcn/ui in a Next.js project.
-- [Vite](https://ui.shadcn.com/docs/installation/vite): Install shadcn/ui in a Vite project.
-- [Remix](https://ui.shadcn.com/docs/installation/remix): Install shadcn/ui in a Remix project.
-- [Astro](https://ui.shadcn.com/docs/installation/astro): Install shadcn/ui in an Astro project.
-- [Laravel](https://ui.shadcn.com/docs/installation/laravel): Install shadcn/ui in a Laravel project.
-- [Gatsby](https://ui.shadcn.com/docs/installation/gatsby): Install shadcn/ui in a Gatsby project.
-- [React Router](https://ui.shadcn.com/docs/installation/react-router): Install shadcn/ui in a React Router project.
-- [TanStack Router](https://ui.shadcn.com/docs/installation/tanstack-router): Install shadcn/ui in a TanStack Router project.
-- [TanStack Start](https://ui.shadcn.com/docs/installation/tanstack): Install shadcn/ui in a TanStack Start project.
-- [Manual Installation](https://ui.shadcn.com/docs/installation/manual): Manually install shadcn/ui without the CLI.
-
 ## Components
 
 ### Form & Input
