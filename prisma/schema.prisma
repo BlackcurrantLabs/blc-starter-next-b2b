@@ -33,6 +33,7 @@ model User {
 
   members     Member[]
   invitations Invitation[]
+  posts       BlogPost[]
 
   @@unique([email])
   @@map("user")
@@ -160,4 +161,40 @@ model ContactReply {
 
   @@index([queryId])
   @@map("contact_reply")
+}
+
+model BlogCategory {
+  id        String     @id
+  name      String     @unique
+  slug      String     @unique
+  sortOrder Int        @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  posts     BlogPost[]
+
+  @@map("blog_category")
+}
+
+model BlogPost {
+  id              String       @id
+  title           String
+  slug            String       @unique
+  content         String       // HTML from Tiptap
+  bannerUrl       String?
+  excerpt         String?      // Auto-generated if empty
+  metaTitle       String?      // Optional, defaults to title
+  metaDescription String
+  ogImageUrl      String?      // Defaults to bannerUrl
+  status          String       // "draft" | "published" | "archived"
+  authorId        String       // Links to User.id
+  author          User         @relation(fields: [authorId], references: [id])
+  categoryId      String
+  category        BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  publishedAt     DateTime?    // Auto-set on publish
+
+  @@index([status, publishedAt]) // For public queries
+  @@index([categoryId, status])
+  @@map("blog_post")
 }
