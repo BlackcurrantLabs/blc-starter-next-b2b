@@ -7,10 +7,8 @@ import { admin, magicLink, organization } from "better-auth/plugins";
 import { sendVerificationEmail, sendResetPasswordEmail, sendMagicLinkEmail } from "./emails";
 export const auth = betterAuth({
   appName: process.env.NEXT_PUBLIC_SITE_NAME,
-  trustedOrigins: [
-    "http://localhost:3000",
-    // Add more domains here
-  ],
+  trustedOrigins: process.env.TRUSTED_ORIGINS?.split(',').map(s => s.trim()) 
+    ?? (process.env.NODE_ENV === 'development' ? ['http://localhost:3000'] : []),
   session: {
     expiresIn: 60 * 60 * 24 * 30, // 30 days
     updateAge: 60 * 60 * 24, // 1 day
