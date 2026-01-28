@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { Mail, MessageSquare, Check, X, Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -44,6 +45,8 @@ export default function QueriesClientPage({
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detail, setDetail] = useState<QueryDetail | null>(null);
   const [loadingDetail, setLoadingDetail] = useState(false);
+  const [replyMessage, setReplyMessage] = useState("");
+  const [sendingReply, setSendingReply] = useState(false);
 
   const selectedQuery = queries.find((q) => q.id === selectedId);
 
@@ -70,6 +73,8 @@ export default function QueriesClientPage({
     setSelectedId(id);
     setLoadingDetail(true);
     setDetail(null);
+    setReplyMessage("");
+    setSendingReply(false);
 
     try {
       const res = await fetch(`/api/admin/queries/${id}`);
@@ -81,6 +86,47 @@ export default function QueriesClientPage({
       toast.error("Failed to load query details");
     } finally {
       setLoadingDetail(false);
+    }
+  };
+
+  const refetchSelectedDetail = async () => {
+    if (!selectedId) return;
+    try {
+      const res = await fetch(`/api/admin/queries/${selectedId}`);
+      if (!res.ok) throw new Error("Failed to fetch details");
+      const data = await res.json();
+      setDetail({ ...data.query, replies: data.replies });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to refresh query details");
+    }
+  };
+
+  const handleSendReply = async () => {
+    if (!selectedId) return;
+    const message = replyMessage.trim();
+    if (!message) return;
+
+    setSendingReply(true);
+    try {
+      const res = await fetch(`/api/admin/queries/${selectedId}/reply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to send reply");
+      }
+
+      toast.success("Reply sent");
+      setReplyMessage("");
+      await refetchSelectedDetail();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send reply");
+    } finally {
+      setSendingReply(false);
     }
   };
 
@@ -247,9 +293,42 @@ export default function QueriesClientPage({
                     </div>
                   </div>
 
+                  <Separator className="my-6" />
+
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium text-muted-foreground">
+                      Reply
+                    </h3>
+                    <Textarea
+                      placeholder={
+                        selectedQuery
+                          ? `Reply to ${selectedQuery.email}...`
+                          : "Type your reply..."
+                      }
+                      value={replyMessage}
+                      onChange={(e) => setReplyMessage(e.target.value)}
+                      disabled={sendingReply}
+                      className="min-h-[120px]"
+                    />
+                    <div className="flex justify-end">
+                      <Button
+                        onClick={handleSendReply}
+                        disabled={sendingReply || replyMessage.trim().length === 0}
+                      >
+                        {sendingReply ? (
+                          <>
+                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          "Send reply"
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
                   {detail.replies && detail.replies.length > 0 && (
                     <>
-                      <Separator className="my-6" />
                       <div className="space-y-6">
                         <h3 className="text-sm font-medium text-muted-foreground">
                           Conversation History
