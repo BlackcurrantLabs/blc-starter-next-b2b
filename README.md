@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BLC Stack B2B
+
+Multi-tenant B2B SaaS starter template built with Next.js 15+, Prisma, BetterAuth, and Tailwind 4.
+
+## Features
+
+- **Multi-tenant Architecture**: Robust organization support with membership management and role-based access control.
+- **Comprehensive Authentication**: Secure auth via BetterAuth, including email/password, magic links, and admin roles.
+- **Pre-built Layouts**: Context-aware layouts for Landing pages, User Accounts, Organizations, and Admin dashboards.
+- **Modern UI Stack**: Built with Tailwind CSS 4, Shadcn UI components, and Radix UI primitives.
+- **Developer Experience**: Optimized for speed with Prisma (SQLite for dev), pnpm, and structured AI agent guidance.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Node.js](https://nodejs.org/) 18+
+- [pnpm](https://pnpm.io/) (Recommended package manager)
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd blc-stack-b2b
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up environment variables:**
+   ```bash
+   cp .env.example .env
+   ```
+   Fill in the required values in `.env` (see [Environment Variables](#environment-variables) section).
+
+4. **Initialize the database:**
+   ```bash
+   npx prisma migrate dev --name init
+   ```
+
+5. **Start the development server:**
+   ```bash
+   pnpm dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Customization Guide
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+When forking this template, follow these steps to make it your own:
 
-## Learn More
+1. **Branding**:
+   - Update `NEXT_PUBLIC_SITE_NAME` in `.env`.
+   - Replace logos in `public/` and update site metadata in `app/layout.tsx`.
+   - Customize theme colors in `app/globals.css`.
 
-To learn more about Next.js, take a look at the following resources:
+2. **Authentication**:
+   - Configure additional OAuth providers in `lib/auth.ts`.
+   - Update `BETTER_AUTH_URL` and `TRUSTED_ORIGINS` for your environment.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Database Schema**:
+   - Modify `prisma/schema.prisma` to add your business-specific models.
+   - Run `npx prisma migrate dev` to apply changes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **Navigation & Layouts**:
+   - Customize sidebar and navbar items in the respective layout components.
+   - Extend the organization or admin dashboards as needed.
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application requires several environment variables to function correctly. Refer to `.env.example` for the full list.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variable | Description |
+| :--- | :--- |
+| `DATABASE_URL` | Prisma database connection string. |
+| `BETTER_AUTH_SECRET` | Secret for auth encryption. |
+| `BETTER_AUTH_URL` | Base URL for authentication callbacks. |
+| `NEXT_PUBLIC_SITE_NAME` | The application's display name. |
+| `RESEND_KEY` | API key for Resend email service. |
+
+## Tech Stack
+
+| Technology | Version | Description |
+| :--- | :--- | :--- |
+| **Next.js** | 16+ | React Framework (App Router) |
+| **React** | 19+ | UI Library |
+| **Prisma** | 7+ | ORM for Database Management |
+| **BetterAuth** | 1+ | Authentication & Session Management |
+| **Tailwind CSS** | 4 | Utility-first CSS Framework |
+| **Shadcn UI** | Latest | Reusable Component Library |
+| **TanStack Table** | 8+ | Headless UI for building powerful tables |
+
+## Documentation
+
+- **AI Agent Guidance**: See `AGENTS.md` for coding patterns, rules, and architecture details.
+- **Detailed Guides**: Explore `.agent/rules/` for deep dives into specific project domains (Prisma, Auth, Styling, etc.).
+
+## Deployment
+
+### Vercel
+The easiest way to deploy is using the [Vercel Platform](https://vercel.com/new).
+Ensure you set all environment variables in the Vercel project settings.
+
+### Railway / Other
+This project is compatible with any platform supporting Node.js. Use `pnpm build` and `pnpm start`. Remember to configure a production database (e.g., PostgreSQL).
+
+## License
+
+MIT
