@@ -15,7 +15,7 @@
 | **Org Context** | `import { AuthUIContext } from '@daveyplate/better-auth-ui'` |
 | **Package Manager** | Always use `pnpm` (Never `npm`) |
 | **Database Sync** | `npx prisma studio` (port 51212) |
-| **Form Library** | `@tanstack/react-form` |
+| **Form Library** | `@tanstack/react-form` + Zod |
 
 ## Project Architecture
 
@@ -89,5 +89,6 @@ Deep dives into specific project domains:
 *(Empty - To be populated during development)*
 
 ## Changelog
+- **2026-01-29**: Completed contact-us feature with Altcha captcha, email threading, and admin management UI. Established @tanstack/react-form + Zod as the standard form pattern.
 - **2026-01-29**: Final verification of contact-us feature. Updated preferred form library to @tanstack/react-form.
 - **2026-01-28**: Initial creation of AGENTS.md. Consolidated content from initial .agent/rules/ guides and Wave 1 learnings.
