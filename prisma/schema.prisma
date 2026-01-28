@@ -134,3 +134,30 @@ model Invitation {
   @@index([email])
   @@map("invitation")
 }
+
+model ContactQuery {
+  id        String         @id
+  email     String
+  subject   String
+  message   String
+  status    String         @default("unread")
+  messageId String?
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  replies   ContactReply[]
+
+  @@map("contact_query")
+}
+
+model ContactReply {
+  id        String       @id
+  queryId   String
+  query     ContactQuery @relation(fields: [queryId], references: [id], onDelete: Cascade)
+  message   String
+  messageId String?
+  sentBy    String
+  createdAt DateTime     @default(now())
+
+  @@index([queryId])
+  @@map("contact_reply")
+}
