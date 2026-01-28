@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { mockEnv } from '@/../tests/utils/mocks';
+import { mockEnv } from '@/../tests/utils/env';
 import { PrismaClient } from '@/generated/prisma/client';
 
 const mockPrismaClient = {
@@ -11,7 +11,7 @@ const mockPrismaClient = {
   $disconnect: vi.fn(),
 } as unknown as PrismaClient;
 
-const mockVerifySolution = vi.fn();
+const mockVerifySolution = vi.fn().mockResolvedValue(true);
 
 vi.mock('@/app/database', () => ({
   prisma: mockPrismaClient,
@@ -244,7 +244,7 @@ describe('POST /api/contact/submit', () => {
   });
 
   it('handles Resend failure gracefully and still creates query', async () => {
-    mockAltcha(true);
+    mockVerifySolution.mockResolvedValue(true);
 
     const createdQuery = {
       id: 'test-query-id',
@@ -297,7 +297,7 @@ describe('POST /api/contact/submit', () => {
   });
 
   it('returns 400 for message exceeding max length', async () => {
-    mockAltcha(true);
+    mockVerifySolution.mockResolvedValue(true);
 
     const longMessage = 'a'.repeat(5001); // Exceeds 5000 char limit
 
