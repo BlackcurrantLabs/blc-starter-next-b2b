@@ -97,6 +97,11 @@ export function getAdminNavItems(): NavSection {
         url: "/admin/list-orgs",
         icon: IconSettings,
       },
+      {
+        title: "Contact Queries",
+        url: "/admin/queries",
+        icon: IconDashboard,
+      },
     ],
     navSecondary: [],
   };
