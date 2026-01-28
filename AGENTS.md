@@ -15,6 +15,7 @@
 | **Org Context** | `import { AuthUIContext } from '@daveyplate/better-auth-ui'` |
 | **Package Manager** | Always use `pnpm` (Never `npm`) |
 | **Database Sync** | `npx prisma studio` (port 51212) |
+| **Form Library** | `@tanstack/react-form` |
 
 ## Project Architecture
 
@@ -28,7 +29,7 @@ This project is a B2B SaaS starter designed for scalability and modern developer
   - **Styling**: Tailwind CSS + Shadcn UI + Radix UI
   - **State**: React Context API (No heavy 3rd party libs)
   - **Infrastructure**: Resend (Email), Trigger.dev (Background Jobs)
-  - **UI Patterns**: Tanstack Tables, react-hook-form + Zod
+  - **UI Patterns**: Tanstack Tables, @tanstack/react-form + Zod
 
 ## Critical Rules
 
@@ -88,4 +89,5 @@ Deep dives into specific project domains:
 *(Empty - To be populated during development)*
 
 ## Changelog
+- **2026-01-29**: Final verification of contact-us feature. Updated preferred form library to @tanstack/react-form.
 - **2026-01-28**: Initial creation of AGENTS.md. Consolidated content from initial .agent/rules/ guides and Wave 1 learnings.
