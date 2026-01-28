@@ -94,7 +94,7 @@ export default function ContactPage() {
             <form.Field
               name="email"
               validators={{
-                onChange: ({ value }) => !value ? 'Email is required' : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? 'Invalid email' : undefined,
+                onChange: ({ value }) => !value ? 'Email is required' : !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value) ? 'Invalid email: TLD required' : undefined,
               }}
             >
               {(field) => (

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { validateEnv } from "@/lib/env";
 import "./globals.css";
+
+validateEnv();
 import { Toaster } from "sonner";
 import { Providers } from "./providers";
 
