@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "better-auth-generate": "npx @better-auth/cli generate",
-    "email:dev": "email dev -d src/emails"
+    "email:dev": "email dev -d src/emails",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@daveyplate/better-auth-ui": "^3.3.15",
@@ -48,6 +51,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.0",
     "@react-email/preview-server": "5.2.5",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.19",

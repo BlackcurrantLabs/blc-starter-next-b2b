@@ -1,0 +1,6 @@
+import '@testing-library/jest-dom';
+import { beforeAll, afterAll } from 'vitest';
+
+beforeAll(() => {});
+
+afterAll(() => {});
