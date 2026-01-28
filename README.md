@@ -93,6 +93,23 @@ The application requires several environment variables to function correctly. Re
 | **Shadcn UI** | Latest | Reusable Component Library |
 | **TanStack Table** | 8+ | Headless UI for building powerful tables |
 
+## Testing
+
+The project includes a comprehensive testing suite using Vitest for unit/integration tests and Playwright for end-to-end tests.
+
+```bash
+# Run unit and integration tests
+pnpm test
+
+# Run tests in watch mode
+pnpm test:watch
+
+# Run end-to-end tests
+pnpm test:e2e
+```
+
+For more details on our testing patterns and utilities, see the [Testing Guide](.agent/rules/testing-guide.md).
+
 ## Documentation
 
 - **AI Agent Guidance**: See `AGENTS.md` for coding patterns, rules, and architecture details.

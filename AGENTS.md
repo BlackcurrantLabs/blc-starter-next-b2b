@@ -16,6 +16,9 @@
 | **Package Manager** | Always use `pnpm` (Never `npm`) |
 | **Database Sync** | `npx prisma studio` (port 51212) |
 | **Form Library** | `@tanstack/react-form` + Zod |
+| **Test (Unit)** | `pnpm test` |
+| **Test (E2E)** | `pnpm test:e2e` |
+| **Test Utilities** | `tests/utils/` |
 
 ## Project Architecture
 
@@ -77,6 +80,7 @@ Deep dives into specific project domains:
 - [Next.js Guide](./.agent/rules/next-js-guide.md)
 - [Styling Guide](./.agent/rules/styling-guide.md)
 - [State Management](./.agent/rules/state-management.md)
+- [Testing Guide](./.agent/rules/testing-guide.md)
 
 <!-- USER-EDITABLE: Add project-specific patterns below -->
 
@@ -86,7 +90,7 @@ Deep dives into specific project domains:
 - **Fonts**: Geist is the primary font family; Inter has been removed to reduce bundle size and match the design system.
 
 ## Best Practices Log
-*(Empty - To be populated during development)*
+- **Testing**: Co-locate tests with components/logic. Use `tests/utils/` factories for seeding test data. Always cleanup DB in E2E tests.
 
 ## Changelog
 - **2026-01-29**: Completed contact-us feature with Altcha captcha, email threading, and admin management UI. Established @tanstack/react-form + Zod as the standard form pattern.
