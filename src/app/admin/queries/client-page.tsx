@@ -159,8 +159,8 @@ export default function QueriesClientPage({
 
   return (
     <div className="h-[calc(100vh-var(--header-height)-2rem)] border rounded-lg overflow-hidden bg-background">
-      <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={33} minSize={25} maxSize={50}>
+      <ResizablePanelGroup orientation="horizontal">
+        <ResizablePanel defaultSize="33%" minSize="25%" maxSize="50%">
           <div className="h-full flex flex-col">
             <div className="p-4 border-b bg-muted/30">
               <h2 className="font-semibold flex items-center gap-2">
@@ -225,7 +225,7 @@ export default function QueriesClientPage({
 
         <ResizableHandle />
 
-        <ResizablePanel defaultSize={67}>
+        <ResizablePanel defaultSize="67%">
           <div className="h-full flex flex-col bg-background/50">
             {!selectedId ? (
               <div className="flex flex-col items-center justify-center h-full text-muted-foreground p-8">
