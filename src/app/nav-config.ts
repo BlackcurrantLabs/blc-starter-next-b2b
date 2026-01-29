@@ -1,6 +1,7 @@
 import {
   LayoutDashboardIcon as IconDashboard,
   Settings2Icon as IconSettings,
+  FileText,
 } from "lucide-react";
 
 import { LucideIcon } from "lucide-react";
@@ -91,6 +92,11 @@ export function getAdminNavItems(): NavSection {
         title: "Dashboard",
         url: "/admin/dashboard",
         icon: IconDashboard,
+      },
+      {
+        title: "Blog",
+        url: "/admin/blog",
+        icon: FileText,
       },
       {
         title: "List Organizations",
