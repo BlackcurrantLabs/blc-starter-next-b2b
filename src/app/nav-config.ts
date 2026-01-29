@@ -29,7 +29,7 @@ export function getPageTitle(pathname: string, navConfig: NavSection): string {
     .filter((item) => pathname.startsWith(item.url))
     .sort((a, b) => b.url.length - a.url.length)[0];
 
-  return match ? match.title : process.env.NEXT_PUBLIC_SITE_NAME;
+  return match ? match.title : process.env.NEXT_PUBLIC_SITE_NAME ?? "";
 }
 
 export function getAccountNavItems(): NavSection {
