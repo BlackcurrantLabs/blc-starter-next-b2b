@@ -6,19 +6,46 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const post = await prisma.blogPost.findUnique({
         where: { slug },
-        select: { title: true, metaDescription: true, bannerUrl: true }
+        select: { 
+            title: true, 
+            metaTitle: true,
+            metaDescription: true, 
+            bannerUrl: true,
+            ogImageUrl: true,
+            slug: true
+        }
     });
     if (!post) return {};
+    
+    const title = post.metaTitle || post.title;
+    const ogImage = post.ogImageUrl || post.bannerUrl;
+    const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
+    
     return {
-        title: post.title,
+        title,
         description: post.metaDescription,
+        alternates: {
+            canonical: canonicalUrl,
+        },
         openGraph: {
-            images: post.bannerUrl ? [post.bannerUrl] : [],
-        }
+            title,
+            description: post.metaDescription,
+            url: canonicalUrl,
+            type: "article",
+            images: ogImage ? [{ url: ogImage }] : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description: post.metaDescription,
+            images: ogImage ? [ogImage] : [],
+        },
     };
 }
 
@@ -36,8 +63,34 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         notFound();
     }
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.metaTitle || post.title,
+        description: post.metaDescription,
+        image: post.ogImageUrl || post.bannerUrl || undefined,
+        datePublished: post.publishedAt?.toISOString(),
+        dateModified: post.updatedAt.toISOString(),
+        author: {
+            "@type": "Person",
+            name: post.author.name,
+        },
+        publisher: {
+            "@type": "Organization",
+            name: process.env.NEXT_PUBLIC_SITE_NAME || "BLC Stack B2B",
+        },
+        mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `${baseUrl}/blog/${post.slug}`,
+        },
+    };
+
     return (
         <article className="max-w-4xl mx-auto space-y-10 pb-12">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <div className="space-y-6">
                 <Link href="/blog" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
                     <ArrowLeft className="mr-2 h-4 w-4" />

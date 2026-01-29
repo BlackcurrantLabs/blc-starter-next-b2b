@@ -2,6 +2,28 @@ import { prisma } from "@/app/database";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Metadata } from "next";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Latest news, thoughts, and insights from our team.",
+  alternates: {
+    canonical: `${baseUrl}/blog`,
+  },
+  openGraph: {
+    title: "Blog",
+    description: "Latest news, thoughts, and insights from our team.",
+    url: `${baseUrl}/blog`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Blog",
+    description: "Latest news, thoughts, and insights from our team.",
+  },
+};
 
 export const revalidate = 60; 
 

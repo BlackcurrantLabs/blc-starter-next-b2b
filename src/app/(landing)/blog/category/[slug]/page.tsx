@@ -6,18 +6,38 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     const category = await prisma.blogCategory.findUnique({
         where: { slug },
-        select: { name: true }
+        select: { name: true, slug: true }
     });
 
     if (!category) return {};
 
+    const title = `${category.name} Posts | Blog`;
+    const description = `Browse all articles in the ${category.name} category`;
+    const canonicalUrl = `${baseUrl}/blog/category/${category.slug}`;
+
     return {
-        title: `${category.name} - Blog`,
-        description: `Read articles about ${category.name}`,
+        title,
+        description,
+        alternates: {
+            canonical: canonicalUrl,
+        },
+        openGraph: {
+            title,
+            description,
+            url: canonicalUrl,
+            type: "website",
+        },
+        twitter: {
+            card: "summary",
+            title,
+            description,
+        },
     };
 }
 
