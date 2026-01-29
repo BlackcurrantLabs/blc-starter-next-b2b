@@ -2,24 +2,9 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/app/database";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import DOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
-
-const RESERVED_SLUGS = ["admin", "api", "blog", "category", "new", "edit", "draft"];
-
-const blogPostUpdateSchema = z.object({
-  title: z.string().min(1).max(200).optional(),
-  slug: z.string().min(1).max(200).regex(/^[a-z0-9-]+$/).optional(),
-  content: z.string().min(1).optional(),
-  bannerUrl: z.string().url().optional().nullable(),
-  excerpt: z.string().max(500).optional().nullable(),
-  metaTitle: z.string().max(60).optional().nullable(),
-  metaDescription: z.string().max(160).optional(),
-  ogImageUrl: z.string().url().optional().nullable(),
-  status: z.enum(["draft", "published", "archived"]).optional(),
-  categoryId: z.string().optional(),
-});
+import { blogPostUpdateSchema, isReservedSlug } from "@/lib/blog/types";
 
 function sanitizeHtml(html: string): string {
   const window = new JSDOM("").window;
@@ -110,7 +95,7 @@ export async function PATCH(
         );
       }
 
-      if (RESERVED_SLUGS.includes(data.slug)) {
+      if (isReservedSlug(data.slug)) {
         return NextResponse.json(
           { error: `Slug '${data.slug}' is reserved and cannot be used` },
           { status: 400 }
@@ -140,7 +125,6 @@ export async function PATCH(
     if (data.excerpt !== undefined) updateData.excerpt = data.excerpt;
     if (data.metaTitle !== undefined) updateData.metaTitle = data.metaTitle;
     if (data.metaDescription !== undefined) updateData.metaDescription = data.metaDescription;
-    if (data.ogImageUrl !== undefined) updateData.ogImageUrl = data.ogImageUrl;
     if (data.categoryId !== undefined) updateData.categoryId = data.categoryId;
 
     if (data.status !== undefined) {

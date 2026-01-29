@@ -22,24 +22,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Pencil, Trash2, Plus } from "lucide-react";
-
-type BlogPost = {
-  id: string;
-  title: string;
-  slug: string;
-  status: string;
-  category: { name: string };
-  author: { name: string };
-  publishedAt: Date | string | null;
-  createdAt: Date | string;
-};
+import { type BlogPostListItem } from "@/lib/blog/types";
 
 interface BlogClientPageProps {
-  initialPosts: BlogPost[];
+  initialPosts: BlogPostListItem[];
 }
 
 export default function BlogClientPage({ initialPosts }: BlogClientPageProps) {
-  const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
+  const [posts, setPosts] = useState<BlogPostListItem[]>(initialPosts);
   const router = useRouter();
 
   const handleDelete = async (id: string) => {

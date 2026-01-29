@@ -25,6 +25,18 @@ export default async function EditPostPage({ params }: EditPostPageProps) {
   const [post, categories] = await Promise.all([
     prisma.blogPost.findUnique({
       where: { id },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        content: true,
+        bannerUrl: true,
+        excerpt: true,
+        metaTitle: true,
+        metaDescription: true,
+        status: true,
+        categoryId: true,
+      },
     }),
     prisma.blogCategory.findMany({
       select: {

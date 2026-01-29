@@ -17,14 +17,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             metaTitle: true,
             metaDescription: true, 
             bannerUrl: true,
-            ogImageUrl: true,
             slug: true
         }
     });
     if (!post) return {};
     
     const title = post.metaTitle || post.title;
-    const ogImage = post.ogImageUrl || post.bannerUrl;
+    const ogImage = post.bannerUrl;
     const canonicalUrl = `${baseUrl}/blog/${post.slug}`;
     
     return {
@@ -68,7 +67,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         "@type": "Article",
         headline: post.metaTitle || post.title,
         description: post.metaDescription,
-        image: post.ogImageUrl || post.bannerUrl || undefined,
+        image: post.bannerUrl || undefined,
         datePublished: post.publishedAt?.toISOString(),
         dateModified: post.updatedAt.toISOString(),
         author: {

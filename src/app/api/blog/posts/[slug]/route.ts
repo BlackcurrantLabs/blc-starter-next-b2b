@@ -22,7 +22,6 @@ export async function GET(
         excerpt: true,
         metaTitle: true,
         metaDescription: true,
-        ogImageUrl: true,
         status: true,
         publishedAt: true,
         category: {

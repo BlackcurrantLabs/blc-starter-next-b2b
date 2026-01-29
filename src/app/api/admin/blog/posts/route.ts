@@ -2,24 +2,9 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/app/database";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import DOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
-
-const RESERVED_SLUGS = ["admin", "api", "blog", "category", "new", "edit", "draft"];
-
-const blogPostCreateSchema = z.object({
-  title: z.string().min(1).max(200),
-  slug: z.string().min(1).max(200).regex(/^[a-z0-9-]+$/),
-  content: z.string().min(1),
-  bannerUrl: z.string().url().optional(),
-  excerpt: z.string().max(500).optional(),
-  metaTitle: z.string().max(60).optional(),
-  metaDescription: z.string().max(160),
-  ogImageUrl: z.string().url().optional(),
-  status: z.enum(["draft", "published", "archived"]),
-  categoryId: z.string(),
-});
+import { blogPostCreateSchema, isReservedSlug } from "@/lib/blog/types";
 
 function sanitizeHtml(html: string): string {
   const window = new JSDOM("").window;
@@ -103,7 +88,7 @@ export async function POST(req: Request) {
 
     const data = parseResult.data;
 
-    if (RESERVED_SLUGS.includes(data.slug)) {
+    if (isReservedSlug(data.slug)) {
       return NextResponse.json(
         { error: `Slug '${data.slug}' is reserved and cannot be used` },
         { status: 400 }
@@ -135,7 +120,6 @@ export async function POST(req: Request) {
         excerpt,
         metaTitle: data.metaTitle,
         metaDescription: data.metaDescription,
-        ogImageUrl: data.ogImageUrl,
         status: data.status,
         categoryId: data.categoryId,
         authorId: session.user.id,

@@ -179,22 +179,21 @@ model BlogPost {
   id              String       @id
   title           String
   slug            String       @unique
-  content         String       // HTML from Tiptap
+  content         String
   bannerUrl       String?
-  excerpt         String?      // Auto-generated if empty
-  metaTitle       String?      // Optional, defaults to title
+  excerpt         String?
+  metaTitle       String?
   metaDescription String
-  ogImageUrl      String?      // Defaults to bannerUrl
-  status          String       // "draft" | "published" | "archived"
-  authorId        String       // Links to User.id
+  status          String
+  authorId        String
   author          User         @relation(fields: [authorId], references: [id])
   categoryId      String
   category        BlogCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
-  publishedAt     DateTime?    // Auto-set on publish
+  publishedAt     DateTime?
 
-  @@index([status, publishedAt]) // For public queries
+  @@index([status, publishedAt])
   @@index([categoryId, status])
   @@map("blog_post")
 }

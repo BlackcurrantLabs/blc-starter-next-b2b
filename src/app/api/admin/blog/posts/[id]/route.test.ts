@@ -45,7 +45,6 @@ const mockPost = {
   excerpt: 'Test excerpt',
   metaTitle: 'Test Meta Title',
   metaDescription: 'Test meta description',
-  ogImageUrl: 'https://example.com/og.jpg',
   status: 'draft',
   authorId: 'admin-user-id',
   categoryId: 'category-1',

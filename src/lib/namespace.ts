@@ -15,16 +15,14 @@ declare module '@tanstack/react-table' {
 }
 
 declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      readonly NODE_ENV: 'development' | 'production' | 'test'
-      readonly NEXT_PUBLIC_SITE_NAME: string
-      readonly NEXT_PUBLIC_BASE_URL: string
-      readonly DATABASE_URL: string
-      readonly BETTER_AUTH_SECRET: string
-      readonly BETTER_AUTH_URL: string
-      readonly RESEND_KEY: string
-      readonly RESEND_FROM: string
-    }
+  interface ProcessEnv extends NodeJS.ProcessEnv {
+    readonly NODE_ENV: 'development' | 'production' | 'test'
+    readonly NEXT_PUBLIC_SITE_NAME: string
+    readonly NEXT_PUBLIC_BASE_URL: string
+    readonly DATABASE_URL: string
+    readonly BETTER_AUTH_SECRET: string
+    readonly BETTER_AUTH_URL: string
+    readonly RESEND_KEY: string
+    readonly RESEND_FROM: string
   }
 }

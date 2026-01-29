@@ -1,8 +1,6 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { zodValidator } from "@tanstack/zod-form-adapter";
-import { z } from "zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -18,22 +16,23 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { TiptapEditor } from "@/components/blog/tiptap-editor";
+import { blogPostFormSchema, type BlogPostFormInput } from "@/lib/blog/types";
 
-const blogPostSchema = z.object({
-  title: z.string().min(1, "Title is required").max(200),
-  slug: z.string().min(1, "Slug is required").max(200).regex(/^[a-z0-9-]+$/, "Slug must be lowercase alphanumeric with hyphens"),
-  content: z.string().min(1, "Content is required"),
-  bannerUrl: z.string().url().optional().or(z.literal("")),
-  excerpt: z.string().max(500).optional(),
-  metaTitle: z.string().max(60).optional(),
-  metaDescription: z.string().max(160, "Meta description too long"),
-  ogImageUrl: z.string().url().optional().or(z.literal("")),
-  status: z.enum(["draft", "published", "archived"]),
-  categoryId: z.string().min(1, "Category is required"),
-});
+type BlogPostFormData = {
+  id?: string;
+  title?: string;
+  slug?: string;
+  content?: string;
+  bannerUrl?: string | null;
+  excerpt?: string | null;
+  metaTitle?: string | null;
+  metaDescription?: string;
+  status?: string;
+  categoryId?: string;
+};
 
 type BlogPostFormProps = {
-  initialData?: any;
+  initialData?: BlogPostFormData;
   categories: { id: string; name: string }[];
   mode: "create" | "edit";
 };
@@ -42,24 +41,23 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
   const router = useRouter();
 
   const form = useForm({
-    defaultValues: initialData || {
-      title: "",
-      slug: "",
-      content: "",
-      bannerUrl: "",
-      excerpt: "",
-      metaTitle: "",
-      metaDescription: "",
-      ogImageUrl: "",
-      status: "draft",
-      categoryId: "",
+    defaultValues: {
+      title: initialData?.title ?? "",
+      slug: initialData?.slug ?? "",
+      content: initialData?.content ?? "",
+      bannerUrl: initialData?.bannerUrl ?? "",
+      excerpt: initialData?.excerpt ?? "",
+      metaTitle: initialData?.metaTitle ?? "",
+      metaDescription: initialData?.metaDescription ?? "",
+      status: initialData?.status ?? "draft",
+      categoryId: initialData?.categoryId ?? "",
     },
     validators: {
       onChange: ({ value }) => undefined, 
     },
     onSubmit: async ({ value }) => {
       try {
-        const url = mode === "create" ? "/api/admin/blog/posts" : `/api/admin/blog/posts/${initialData.id}`;
+        const url = mode === "create" ? "/api/admin/blog/posts" : `/api/admin/blog/posts/${initialData?.id}`;
         const method = mode === "create" ? "POST" : "PATCH";
 
         const res = await fetch(url, {
@@ -95,9 +93,8 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
         <div className="md:col-span-2 space-y-6">
           <Card>
             <CardContent className="p-6 space-y-4">
-              <form.Field
-                name="title"
-                children={(field) => (
+              <form.Field name="title">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="title">Title</Label>
                     <Input
@@ -120,11 +117,10 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     )}
                   </div>
                 )}
-              />
+              </form.Field>
 
-              <form.Field
-                name="slug"
-                children={(field) => (
+              <form.Field name="slug">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="slug">Slug</Label>
                     <Input
@@ -139,11 +135,10 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     )}
                   </div>
                 )}
-              />
+              </form.Field>
 
-              <form.Field
-                name="content"
-                children={(field) => (
+              <form.Field name="content">
+                {(field) => (
                   <div className="space-y-2">
                     <Label>Content</Label>
                     <TiptapEditor
@@ -155,11 +150,10 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     )}
                   </div>
                 )}
-              />
+              </form.Field>
               
-              <form.Field
-                name="excerpt"
-                children={(field) => (
+              <form.Field name="excerpt">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="excerpt">Excerpt (Optional)</Label>
                     <Textarea
@@ -171,7 +165,7 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     />
                   </div>
                 )}
-              />
+              </form.Field>
             </CardContent>
           </Card>
         </div>
@@ -179,14 +173,13 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
         <div className="space-y-6">
           <Card>
             <CardContent className="p-6 space-y-4">
-              <form.Field
-                name="status"
-                children={(field) => (
+              <form.Field name="status">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="status">Status</Label>
                     <Select
                       value={field.state.value}
-                      onValueChange={field.handleChange}
+                      onValueChange={(v) => field.handleChange(v as "draft" | "published" | "archived")}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select status" />
@@ -199,11 +192,10 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     </Select>
                   </div>
                 )}
-              />
+              </form.Field>
 
-              <form.Field
-                name="categoryId"
-                children={(field) => (
+              <form.Field name="categoryId">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="categoryId">Category</Label>
                     <Select
@@ -226,15 +218,14 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     )}
                   </div>
                 )}
-              />
+              </form.Field>
             </CardContent>
           </Card>
 
           <Card>
             <CardContent className="p-6 space-y-4">
-              <form.Field
-                name="bannerUrl"
-                children={(field) => (
+              <form.Field name="bannerUrl">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="bannerUrl">Banner URL</Label>
                     <Input
@@ -246,16 +237,15 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                     />
                   </div>
                 )}
-              />
+              </form.Field>
             </CardContent>
           </Card>
 
           <Card>
              <CardContent className="p-6 space-y-4">
                <h3 className="font-semibold mb-2">SEO</h3>
-               <form.Field
-                 name="metaTitle"
-                 children={(field) => (
+               <form.Field name="metaTitle">
+                 {(field) => (
                    <div className="space-y-2">
                      <Label htmlFor="metaTitle">Meta Title</Label>
                      <Input
@@ -266,10 +256,9 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                      />
                    </div>
                  )}
-               />
-               <form.Field
-                 name="metaDescription"
-                 children={(field) => (
+               </form.Field>
+               <form.Field name="metaDescription">
+                 {(field) => (
                    <div className="space-y-2">
                      <Label htmlFor="metaDescription">Meta Description</Label>
                      <Textarea
@@ -281,7 +270,7 @@ export function BlogPostForm({ initialData, categories, mode }: BlogPostFormProp
                      />
                    </div>
                  )}
-               />
+               </form.Field>
              </CardContent>
           </Card>
         </div>
