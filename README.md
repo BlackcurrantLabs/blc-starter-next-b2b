@@ -1,11 +1,14 @@
-# BLC Starter Next B2B
+# Blackcurrant Stack Starter Next B2B
 
+This is a boilerplate for starting new projects. 
 Multi-tenant B2B SaaS starter template built with Next.js 15+, Prisma, BetterAuth, and Tailwind 4.
-Has Superadmin control with orgs and members with self signup, users can create new orgs or be invited to existing ones.
+It's an opionated set of frameworks and tools hand picked for our general use cases.
+This may not fit every use case.
 
 *Vibe code* friendly, includes `AGENTS.md` and `.agent/rules` 
 compatible with opencode, claude code, antigravity.
 
+Has Superadmin control with orgs and members with self signup, users can create new orgs or be invited to existing ones.
 If you need B2C (No Orgs, just end users), start from other repo at [B2C Starter](https://github.com/BlackcurrantLabs/blc-starter-next-b2c)
 
 ## Features
