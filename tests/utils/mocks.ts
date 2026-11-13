@@ -35,7 +35,7 @@ export interface MockResendClient {
  * );
  */
 export function mockResend(): MockResendClient {
-  const sendSpy = vi.fn(async (params: any): Promise<MockResendResponse> => {
+  const sendSpy = vi.fn(async (): Promise<MockResendResponse> => {
     return {
       data: {
         id: `email-${Date.now()}`,
@@ -43,12 +43,18 @@ export function mockResend(): MockResendClient {
     };
   });
 
-  vi.mock('resend', () => ({
-    Resend: vi.fn(() => ({
-      emails: {
-        send: sendSpy,
-      },
-    })),
+  // vi.doMock (not vi.mock): Vitest 5 only allows vi.mock at the top level of
+  // a test file. Call this helper before dynamically importing the module
+  // under test.
+  vi.doMock('resend', () => ({
+    // A regular function so the mock can be constructed with `new Resend()`.
+    Resend: vi.fn(function () {
+      return {
+        emails: {
+          send: sendSpy,
+        },
+      };
+    }),
   }));
 
   return {
@@ -59,7 +65,7 @@ export function mockResend(): MockResendClient {
 }
 
 /**
- * Mocks the Altcha verifySolution function
+ * Mocks the Altcha verifyAltchaPayload helper (@/lib/altcha)
  * Allows controlling whether captcha validation passes or fails
  *
  * @param {boolean} valid - Whether the captcha solution should be valid
@@ -67,14 +73,15 @@ export function mockResend(): MockResendClient {
  *
  * @example
  * mockAltcha(true);
- * // verifySolution will return true
+ * // verifyAltchaPayload will resolve to true
  *
  * mockAltcha(false);
- * // verifySolution will return false
+ * // verifyAltchaPayload will resolve to false
  */
 export function mockAltcha(valid: boolean): void {
-  vi.mock('altcha-lib', () => ({
-    verifySolution: vi.fn(async (): Promise<boolean> => valid),
+  // vi.doMock (not vi.mock): see mockResend above.
+  vi.doMock('@/lib/altcha', () => ({
+    verifyAltchaPayload: vi.fn(async (): Promise<boolean> => valid),
   }));
 }
 

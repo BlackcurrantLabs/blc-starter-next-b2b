@@ -8,12 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import Script from 'next/script';
-import { useRef, useEffect } from 'react';
+import { AltchaWidget } from '@/components/altcha-widget';
 import { useRouter } from 'next/navigation';
 
 export default function ContactPage() {
-  const widgetRef = useRef<HTMLElement>(null);
   const router = useRouter();
 
   const form = useForm({
@@ -53,33 +51,13 @@ export default function ContactPage() {
     form.handleSubmit();
   }, 500);
 
-  useEffect(() => {
-    const widget = widgetRef.current;
-    if (!widget) return;
-
-    const handleStateChange = (ev: Event) => {
-      const customEvent = ev as CustomEvent;
-      if (customEvent.detail?.state === 'verified') {
-        form.setFieldValue('altcha', customEvent.detail.payload);
-      }
-    };
-
-    widget.addEventListener('statechange', handleStateChange);
-    return () => widget.removeEventListener('statechange', handleStateChange);
-  }, [form]);
-
   return (
     <div className="container mx-auto max-w-2xl py-12 px-4">
-      <Script 
-        src="https://altcha.org/js/altcha.min.js" 
-        strategy="afterInteractive" 
-      />
-      
       <Card>
         <CardHeader>
           <CardTitle>Contact Us</CardTitle>
           <CardDescription>
-            Send us a message and we'll get back to you as soon as possible.
+            Send us a message and we&apos;ll get back to you as soon as possible.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -176,8 +154,10 @@ export default function ContactPage() {
             >
               {(field) => (
                 <div className="space-y-2">
-                  {/* @ts-ignore */}
-                  <altcha-widget ref={widgetRef} challengeurl="/api/contact/challenge"></altcha-widget>
+                  <AltchaWidget
+                    challengeUrl="/api/contact/challenge"
+                    onVerified={(payload) => field.handleChange(payload)}
+                  />
                   {field.state.meta.errors ? (
                     <p className="text-sm text-red-500">{field.state.meta.errors.join(', ')}</p>
                   ) : null}

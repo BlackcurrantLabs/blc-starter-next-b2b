@@ -130,7 +130,7 @@ export default async function CategoryPage({
                     </div>
                     <h3 className="text-lg font-medium">No posts found</h3>
                     <p className="text-muted-foreground mt-1">
-                        We couldn't find any posts in this category.
+                        We couldn&apos;t find any posts in this category.
                     </p>
                     <Link href="/blog" className="mt-4 inline-flex items-center text-primary hover:underline">
                         View all posts

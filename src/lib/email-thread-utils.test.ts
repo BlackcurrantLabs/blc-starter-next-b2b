@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { vi, type Mock } from 'vitest';
 import { buildThreadHeaders } from './email-thread-utils';
 import { prisma as realPrisma } from '@/app/database';
 
@@ -13,7 +13,10 @@ vi.mock('@/app/database', () => ({
   },
 }));
 
-const mockPrisma = realPrisma as any;
+const mockPrisma = realPrisma as unknown as {
+  contactQuery: { findUnique: Mock };
+  contactReply: { findMany: Mock };
+};
 
 describe('buildThreadHeaders() - Email Thread Headers', () => {
   beforeEach(() => {

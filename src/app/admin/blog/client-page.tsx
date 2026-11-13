@@ -52,7 +52,9 @@ export default function BlogClientPage({ initialPosts }: BlogClientPageProps) {
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (
+    status: string,
+  ): "default" | "secondary" | "outline" => {
     switch (status) {
       case "published":
         return "default";
@@ -128,7 +130,7 @@ export default function BlogClientPage({ initialPosts }: BlogClientPageProps) {
                       <Badge variant="outline">{post.category.name}</Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={getStatusColor(post.status) as any}>
+                      <Badge variant={getStatusColor(post.status)}>
                         {post.status}
                       </Badge>
                     </TableCell>

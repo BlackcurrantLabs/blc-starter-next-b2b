@@ -9,7 +9,7 @@ import {
   Tailwind,
   Text,
   Hr,
-} from '@react-email/components';
+} from 'react-email';
 import tailwindConfig from '@/emails/tailwind.config';
 
 interface ContactReplyProps {

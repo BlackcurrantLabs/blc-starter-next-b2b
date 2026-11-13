@@ -1,13 +1,13 @@
-packages:
-  - .
-
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
-
-onlyBuiltDependencies:
-  - '@prisma/engines'
-  - better-sqlite3
-  - core-js
-  - esbuild
-  - prisma
+# Dependencies that are allowed (true) or explicitly denied (false) to run
+# install scripts. Replaces onlyBuiltDependencies / ignoredBuiltDependencies,
+# which were removed in pnpm 11.
+allowBuilds:
+  '@prisma/engines': true
+  better-sqlite3: true
+  core-js: true
+  esbuild: true
+  prisma: true
+  sharp: false
+  unrs-resolver: false
+minimumReleaseAgeExclude:
+  - jsdom@31.0.1

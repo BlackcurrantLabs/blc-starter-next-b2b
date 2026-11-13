@@ -59,7 +59,7 @@ export async function sendContactReplyEmail(
   email: string, 
   subject: string, 
   message: string, 
-  headers?: any
+  headers?: Record<string, string>
 ) {
   return resend.emails.send({
     from: process.env.RESEND_FROM as string,

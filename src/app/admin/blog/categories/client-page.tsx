@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
-import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -147,9 +146,8 @@ export default function CategoriesClientPage({
               }}
               className="space-y-4"
             >
-              <createForm.Field
-                name="name"
-                children={(field) => (
+              <createForm.Field name="name">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="name">Name</Label>
                     <Input
@@ -172,10 +170,9 @@ export default function CategoriesClientPage({
                     )}
                   </div>
                 )}
-              />
-              <createForm.Field
-                name="slug"
-                children={(field) => (
+              </createForm.Field>
+              <createForm.Field name="slug">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="slug">Slug</Label>
                     <Input
@@ -191,10 +188,9 @@ export default function CategoriesClientPage({
                     )}
                   </div>
                 )}
-              />
-              <createForm.Field
-                name="sortOrder"
-                children={(field) => (
+              </createForm.Field>
+              <createForm.Field name="sortOrder">
+                {(field) => (
                   <div className="space-y-2">
                     <Label htmlFor="sortOrder">Sort Order</Label>
                     <Input
@@ -211,7 +207,7 @@ export default function CategoriesClientPage({
                     )}
                   </div>
                 )}
-              />
+              </createForm.Field>
               <DialogFooter>
                 <Button
                   type="button"

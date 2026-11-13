@@ -23,8 +23,8 @@ vi.mock('@/lib/emails', () => ({
   })),
 }));
 
-vi.mock('altcha-lib', () => ({
-  verifySolution: mockVerifySolution,
+vi.mock('@/lib/altcha', () => ({
+  verifyAltchaPayload: mockVerifySolution,
 }));
 
 describe('POST /api/contact/submit', () => {

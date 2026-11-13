@@ -1,14 +1,9 @@
-import { createChallenge } from 'altcha-lib';
+import { createAltchaChallengeResponse } from '@/lib/altcha';
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
-    const challenge = await createChallenge({
-      hmacKey: process.env.ALTCHA_HMAC_KEY || 'default-secret',
-      maxNumber: 100000,
-      algorithm: 'SHA-256',
-    });
-    return NextResponse.json(challenge);
+    return await createAltchaChallengeResponse(req);
   } catch (error) {
     console.error('Error generating challenge:', error);
     return NextResponse.json({ error: 'Failed to generate challenge' }, { status: 500 });

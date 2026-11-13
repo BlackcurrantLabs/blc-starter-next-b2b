@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 import { beforeAll, afterAll } from 'vitest';
 import { execSync } from 'node:child_process';
 

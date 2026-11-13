@@ -1,6 +1,8 @@
 import { prisma } from "@/app/database";
 
-export async function buildThreadHeaders(queryId: string) {
+export async function buildThreadHeaders(
+  queryId: string,
+): Promise<Record<string, string>> {
   const query = await prisma.contactQuery.findUnique({
     where: { id: queryId },
     select: { messageId: true },

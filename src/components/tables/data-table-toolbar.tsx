@@ -1,6 +1,6 @@
 "use client";
 
-import { Table } from "@tanstack/react-table";
+import { RowData } from "@tanstack/react-table";
 import { X } from "lucide-react";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -8,19 +8,20 @@ import { useDebouncedCallback } from "use-debounce";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTable } from "./data-table-features";
 
-interface DataTableToolbarProps<TData> {
-  table: Table<TData>;
+interface DataTableToolbarProps<TData extends RowData> {
+  table: DataTable<TData>;
   tableActions?: React.ReactNode[];
 }
 
-export function DataTableToolbar<TData>({
+export function DataTableToolbar<TData extends RowData>({
   table,
   tableActions = [],
 }: Readonly<DataTableToolbarProps<TData>>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.state.columnFilters.length > 0;
   const [value, setValue] = useState(
-    (table.getState().globalFilter as string) ?? "",
+    (table.state.globalFilter as string) ?? "",
   );
   const debounced = useDebouncedCallback((value: string) => {
     table.setGlobalFilter(String(value));

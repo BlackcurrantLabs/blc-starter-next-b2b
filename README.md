@@ -1,7 +1,7 @@
 # Blackcurrant Stack Starter Next B2B
 
 This is a boilerplate for starting new projects. 
-Multi-tenant B2B SaaS starter template built with Next.js 15+, Prisma, BetterAuth, and Tailwind 4.
+Multi-tenant B2B SaaS starter template built with Next.js 16, Prisma, BetterAuth, and Tailwind 4.
 It's an opionated set of frameworks and tools hand picked for our general use cases.
 This may not fit every use case.
 
@@ -25,8 +25,8 @@ If you need B2C (No Orgs, just end users), start from other repo at [B2C Starter
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) LTS nvm recommended. Do `nvm use` in project root.
-- [pnpm](https://pnpm.io/) (Recommended package manager)
+- [Node.js](https://nodejs.org/) 26 LTS. The exact version is pinned in `.nvmrc`; with nvm, run `nvm install` then `nvm use` in the project root.
+- [pnpm](https://pnpm.io/) 12. The exact version is pinned in the `packageManager` field of `package.json`.
 
 ### Installation
 
@@ -40,6 +40,7 @@ If you need B2C (No Orgs, just end users), start from other repo at [B2C Starter
    ```bash
    pnpm install
    ```
+   This also generates the Prisma client (`postinstall` runs `prisma generate`).
 
 3. **Set up environment variables:**
    ```bash
@@ -91,6 +92,7 @@ The application requires several environment variables to function correctly. Re
 | `BETTER_AUTH_URL` | Base URL for authentication callbacks. |
 | `NEXT_PUBLIC_SITE_NAME` | The application's display name. |
 | `RESEND_KEY` | API key for Resend email service. |
+| `ALTCHA_HMAC_KEY` | Secret that signs contact-form captcha challenges. The contact form does not work without it. |
 
 ## Tech Stack
 
@@ -102,7 +104,7 @@ The application requires several environment variables to function correctly. Re
 | **BetterAuth** | 1+ | Authentication & Session Management |
 | **Tailwind CSS** | 4 | Utility-first CSS Framework |
 | **Shadcn UI** | Latest | Reusable Component Library |
-| **TanStack Table** | 8+ | Headless UI for building powerful tables |
+| **TanStack Table** | 9+ | Headless UI for building powerful tables |
 
 ## Testing
 

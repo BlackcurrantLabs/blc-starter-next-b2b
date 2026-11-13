@@ -1,14 +1,18 @@
-import { RowData } from '@tanstack/react-table'
+import { RowData, TableFeatures } from '@tanstack/react-table'
 import { LucideIcon } from 'lucide-react'
 
 export interface FilterOption {
-  value: any,
+  value: string,
   label: string,
   icon?: LucideIcon
 }
 
 declare module '@tanstack/react-table' {
-  interface ColumnMeta<TData extends RowData, TValue> {
+  interface ColumnMeta<
+    TFeatures extends TableFeatures,
+    TData extends RowData,
+    TValue,
+  > {
     filterTitle: string,
     filterOptions: FilterOption[]
   }

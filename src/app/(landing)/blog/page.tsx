@@ -1,4 +1,5 @@
 import { prisma } from "@/app/database";
+import type { Prisma } from "@/generated/prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -34,7 +35,7 @@ export default async function BlogPage({
 }) {
   const { category: categorySlug } = await searchParams;
   
-  const where: any = {
+  const where: Prisma.BlogPostWhereInput = {
     status: "published",
   };
   
@@ -107,7 +108,7 @@ export default async function BlogPage({
                     </div>
                     <h3 className="text-lg font-medium">No posts found</h3>
                     <p className="text-muted-foreground mt-1">
-                        We couldn't find any posts in this category.
+                        We couldn&apos;t find any posts in this category.
                     </p>
                     <Link href="/blog" className="mt-4 inline-flex items-center text-primary hover:underline">
                         View all posts

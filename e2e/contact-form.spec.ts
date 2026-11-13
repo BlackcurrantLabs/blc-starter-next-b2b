@@ -16,7 +16,7 @@ test.describe('Contact Form', () => {
     await page.locator('[data-testid="message-input"]').fill('This is a test message from E2E tests.');
 
     await page.evaluate(() => {
-      const widget = document.querySelector('altcha-widget') as any;
+      const widget = document.querySelector('altcha-widget');
       if (widget) {
         widget.dispatchEvent(new CustomEvent('statechange', {
           detail: {

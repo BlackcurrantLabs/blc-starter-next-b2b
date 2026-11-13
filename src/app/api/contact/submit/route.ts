@@ -1,4 +1,4 @@
-import { verifySolution } from 'altcha-lib';
+import { verifyAltchaPayload } from '@/lib/altcha';
 import { z } from 'zod';
 import { prisma } from '@/app/database';
 import { sendContactReceivedEmail } from '@/lib/emails';
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Configuration error' }, { status: 500 });
     }
 
-    const isValid = await verifySolution(altcha, process.env.ALTCHA_HMAC_KEY);
+    const isValid = await verifyAltchaPayload(altcha);
     if (!isValid) {
       // The requirement asks for 401 for expired/invalid challenge
       return NextResponse.json({ error: 'Captcha expired or invalid. Please try again.' }, { status: 401 });
